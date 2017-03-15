@@ -20,14 +20,14 @@
         edit: function() {
           alert('editing');
         },
-        remove: function() {
+        delete: function() {
           alert('removing');
         },
         render: function(){
         return (<div className="commentContainer">
             <div ClassName="commentText">placeholder</div>
-            <button>Edit</button>
-            <button>Delete</button>
+            <button onClick={this.edit}>Edit</button>
+            <button onClick={this.delete}>Delete</button>
           </div>
           );
         }
