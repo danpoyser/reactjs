@@ -24,6 +24,8 @@
           this.setState({editing: true});
         },
         save: function() {
+          var note = this.refs.newNote.value;
+          console.log(note)
           this.setState({editing: false});
         },
         delete: function() {
@@ -40,7 +42,7 @@
         },
         renderForm: function(){
         return (<div className="commentContainer">
-            <textarea defaultValue={this.props.children}></textarea>
+            <textarea ref="newNote" defaultValue={this.props.children}></textarea>
             <button onClick={this.save}>Save</button>
           </div>
         )
