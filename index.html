@@ -14,7 +14,14 @@
     <div id="container"></div>
 
     <script type="text/babel">
-
+      var component = react.createClass({
+        render: function() {
+          return (
+          <h3>Hello, is this working?</h3>
+        );
+        }
+      });
+      React.render(<component />, document.getElementById('continer'));
 
     </script>
   </body>
