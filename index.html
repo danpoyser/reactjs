@@ -4,11 +4,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="">
     <script src="src/react.min.js"></script>
     <script src="src/react-dom.min.js"></script>
     <script src="src/browser.min.js"></script>
-    <title>React Tutorials</title>
+    <title>Take some notes</title>
   </head>
 
   <body>
@@ -16,51 +16,93 @@
 
     <script type="text/babel">
 
-      var Comment = React.createClass({
-        getInitialState: function () {
-          return {editing: false}
-        },
-        edit: function() {
-          this.setState({editing: true});
-        },
-        save: function() {
-          var note = this.refs.newNote.value;
-          console.log(note)
-          this.setState({editing: false});
-        },
-        delete: function() {
-          console.log('Deleting comment')
-        },
-
-        renderNormal: function(){
-        return (<div className="commentContainer">
-            <div ClassName="commentText">{this.props.children}</div>
-            <button onClick={this.edit}>Edit</button>
-            <button onClick={this.delete}>Delete</button>
-          </div>
-        )
-        },
-        renderForm: function(){
-        return (<div className="commentContainer">
-            <textarea ref="newNote" defaultValue={this.props.children}></textarea>
-            <button onClick={this.save}>Save</button>
-          </div>
-        )
+    var Note = React.createClass({
+      getInitialState: function () {
+        return {editing: false}
       },
-        render: function () {
-          if (this.state.editing) {
-            return this.renderForm();
-          }else{
-            return this.renderNormal();
+      edit: function () {
+        this.setState({editing: true});
+      },
+      delete: function () {
+        this.props.deleteFromBoard(this.props.index)
+      },
+      save: function () {
+        this.props.updateNoteText(this.refs.newNote.value, this.props.index);
+        this.setState({editing: false});
+      },
+
+      renderNormal: function () {
+        return (
+          <div className="noteContainer">
+            <div className="noteText">{this.props.children}</div>
+            <button onClick={this.edit} className="edit">Edit</button>
+            <button onClick={this.delete} className="delete">Delete</button>
+          </div>
+      );
+    },
+
+    renderForm: function () {
+      return (
+      <div className="noteContainer">
+        <textarea ref="newNote" defaultValue={this.props.children}></textarea>
+        <button onClick={this.save} className="button-success">Save</button>
+      </div>
+    );
+  },
+  render: function () {
+    if(this.state.editing) {
+      return this.renderForm();
+    }else{
+      return this.renderNormal();
+    }
+  }
+    });
+var Board = React.createClass ({
+  getInitialState: function () {
+    return {
+      notes: []
+    }
+  },
+  add: function (text) {
+    var arr = this.state.notes;
+    arr.push(text);
+    this.setState({notes: arr})
+  },
+deleteNote: function (i) {
+    console.log('Deleting note');
+    var arr = this.state.notes;
+    arr.splice(i, 1);
+    this.setState({notes: arr})
+  },
+  updateNote: function (newNote, i) {
+    console.log('updating note')
+    var arr = this.state.notes;
+    arr[i] = newNote;
+    this.setState({notes: arr})
+  },
+   eachNote: function (text, i) {
+    return (
+      <Note key={i} index={i} updateNoteText={this.updateNote} deleteFromBoard={this.deleteNote}>
+        {text}
+      </Note>)
+  },
+  render: function () {
+    return (
+      <div>
+      <button onClick={this.add.bind(null, 'Default text')} className="button-info create">Add New</button>
+        <div className="board">
+          {
+            this.state.notes.map(this.eachNote)
           }
-        }
-      });
-      ReactDOM.render(<div>
-        <Comment>dan here</Comment>
-        <Comment>comment two</Comment>
-        <Comment>is this number three?</Comment>
-        </div>,
-      document.getElementById('container'));
+        </div>
+      </div>
+    );
+  }
+});
+    ReactDOM.render(
+      <Board />,
+      document.getElementById('container')
+    );
     </script>
   </body>
 </html>
