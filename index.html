@@ -25,7 +25,7 @@
         },
         render: function(){
         return (<div className="commentContainer">
-            <div ClassName="commentText">placeholder</div>
+            <div ClassName="commentText">{this.props.children}</div>
             <button onClick={this.edit}>Edit</button>
             <button onClick={this.delete}>Delete</button>
           </div>
@@ -33,9 +33,9 @@
         }
       });
       ReactDOM.render(<div>
-        <Comment>howdy doody</Comment>
-        <Comment>howdy doody</Comment>
-        <Comment>howdy doody</Comment>
+        <Comment>dan here</Comment>
+        <Comment>comment two</Comment>
+        <Comment>is this number three?</Comment>
         </div>,
       document.getElementById('container'));
     </script>
