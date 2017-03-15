@@ -1,28 +1,43 @@
+
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="stylesheet" type="text/css" href="css/main.css">
     <script src="src/react.min.js"></script>
     <script src="src/react-dom.min.js"></script>
     <script src="src/browser.min.js"></script>
-    <title>Take some notes</title>
+    <title>React Tutorials</title>
   </head>
 
   <body>
     <div id="container"></div>
 
     <script type="text/babel">
-      var component = react.createClass({
-        render: function() {
-          return (
-          <h3>Hello, is this working?</h3>
-        );
+
+      var Comment = React.createClass({
+        edit: function() {
+          alert('editing');
+        },
+        remove: function() {
+          alert('removing');
+        },
+        render: function(){
+        return (<div className="commentContainer">
+            <div ClassName="commentText">placeholder</div>
+            <button>Edit</button>
+            <button>Delete</button>
+          </div>
+          );
         }
       });
-      React.render(<component />, document.getElementById('continer'));
-
+      ReactDOM.render(<div>
+        <Comment>howdy doody</Comment>
+        <Comment>howdy doody</Comment>
+        <Comment>howdy doody</Comment>
+        </div>,
+      document.getElementById('container'));
     </script>
   </body>
 </html>
